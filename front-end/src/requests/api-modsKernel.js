@@ -49,7 +49,7 @@ const request = async (httpcall) =>  {
 export const getRAM = () => request(() => axios.get(urlGO + "/RAM"));
 export const getCPU = () => request(() => axios.get(urlGO + "/CPU"));
 export const setLogs = (setlogsRam, setlogsCpu) => {
-    const socket = socketIOClient(urlNODE);
+    const socket = socketIOClient(urlNODE, {transports:['websocket']});
     socket.on("FromAPI", data => {
       //console.log(data);
       setlogsRam(data.logsRam);
