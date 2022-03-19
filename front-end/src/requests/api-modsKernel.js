@@ -52,7 +52,7 @@ export const setLogs = (setlogsRam, setlogsCpu) => {
     const socket = connect(urlNODE);
     socket.on("FromAPI", data => {
         console.log(data);
-        if (data === undefined){
+        if (Object.keys(data).length === 0){
             setlogsRam([]);
             setlogsCpu([]);
         }else{
