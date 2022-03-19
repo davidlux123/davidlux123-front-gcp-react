@@ -51,7 +51,7 @@ export const getCPU = () => request(() => axios.get(urlGO + "/CPU"));
 export const setLogs = (setlogsRam, setlogsCpu) => {
     const socket = connect(urlNODE);
     socket.on("FromAPI", data => {
-        //console.log(data);
+        console.log(data);
         if (data === undefined){
             setlogsRam([]);
             setlogsCpu([]);
