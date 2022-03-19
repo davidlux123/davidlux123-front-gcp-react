@@ -1,7 +1,7 @@
 import axios from "axios";
 import socketIOClient from "socket.io-client";
 const urlGO = process.env.BALANCERGO || 'http://35.208.104.239/api';
-const urlNODE = process.env.ENGINENODE ||'https://sopes-proyecto1-343005.uc.r.appspot.com';//'http://localhost:8080/'
+const urlNODE = process.env.ENGINENODE ||'https://sopes-proyecto1-343005.uc.r.appspot.com/';//'http://localhost:8080/'
 
 const arreglarJson = (element) =>{
     let nvoDate = element.date + ''
@@ -50,10 +50,16 @@ export const getRAM = () => request(() => axios.get(urlGO + "/RAM"));
 export const getCPU = () => request(() => axios.get(urlGO + "/CPU"));
 export const setLogs = (setlogsRam, setlogsCpu) => {
     const socket = socketIOClient(urlNODE);
-    socket.on("FromAPI", data => {
-      //console.log(data);
-      setlogsRam(data.logsRam);
-      setlogsCpu(data.logsCpu);
-    });
+    if (socket.connected){
+        socket.on("FromAPI", data => {
+        //console.log(data);
+        setlogsRam(data.logsRam);
+        setlogsCpu(data.logsCpu);
+        });
+    }else{
+        console.warn('Aqui esta el pto error de mrda que me tiene a verga :3');
+        setlogsRam([]);
+        setlogsCpu([]);
+    }
     return socket
 }
